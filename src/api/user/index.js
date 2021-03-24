@@ -17,10 +17,13 @@ export const login = (data) => {
     })
 }
 
-export const getUserInfo = (data) => {
+export const getUserInfo = (userId,token) => {
     return request({
-        url:'/api/user/login',
+        url:'/api/user/getInfo',
         method:'post',
-        data:data
+        data:{
+            userId,
+            token
+        }
     })
 }
