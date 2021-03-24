@@ -1,0 +1,39 @@
+import axios from 'axios';
+
+const service = axios.create({
+    baseURL: 'http://59.110.226.77:3000', // api的base_url
+    timeout: 600000 // request timeout
+})
+
+//返回其他状态码
+axios.defaults.validateStatus = function (status) {
+    return status >= 200 && status <= 500;
+};
+// //跨域请求，允许保存cookie
+axios.defaults.withCredentials = true;
+
+// 响应拦截
+service.interceptors.response.use(response => {
+    // 请求成功
+    // 1. 根据自己项目需求定制自己的拦截
+    // 2. 然后返回数据
+    return response;
+}, error => {
+    // 请求失败
+    if (error && error.response) {
+        switch (error.response.status) {
+            case 400:
+                // 对400错误您的处理\
+                break
+            case 401:
+                // 对 401 错误进行处理
+                break
+            default:
+                // 如果以上都不是的处理
+                return Promise.reject(error);
+        }
+    }
+
+})
+
+export default service;
